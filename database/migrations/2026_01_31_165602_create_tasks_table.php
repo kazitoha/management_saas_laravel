@@ -12,8 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->unsignedBigInteger('assigned_to')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->string('title', 255);
+            $table->longText('description')->nullable();
+            $table->string('priority', 255)->default('Medium');
+            $table->string('status', 255)->default('Pending');
+            $table->string('due_date', 255)->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->index('company_id', 'tasks_tenant_id_foreign');
+            $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
         });
     }
 

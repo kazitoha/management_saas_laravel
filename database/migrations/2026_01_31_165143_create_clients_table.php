@@ -12,8 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->string('email', 255)->nullable();
+            $table->string('phone', 255)->nullable();
+            $table->string('company', 255)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->longText('note')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->index('company_id', 'clients_tenant_id_foreign');
+            $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
         });
     }
 

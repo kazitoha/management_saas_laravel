@@ -12,8 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('task_check_list_items', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('task_id');
+            $table->string('title', 255);
+            $table->tinyInteger('is_completed')->default(0);
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->index('task_id', 'checklist_items_task_id_foreign');
+            $table->index('company_id', 'checklist_items_tenant_id_foreign');
+            $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
+            $table->foreign('task_id')->references('id')->on('tasks')->cascadeOnDelete();
         });
     }
 

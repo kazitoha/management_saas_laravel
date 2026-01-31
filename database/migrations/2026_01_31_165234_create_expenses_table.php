@@ -12,8 +12,29 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('expenses', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('account_id')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->string('title', 255);
+            $table->string('date', 255);
+            $table->string('amount', 255);
+            $table->longText('note')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->index('account_id', 'expenses_account_id_foreign');
+            $table->index('category_id', 'expenses_category_id_foreign');
+            $table->index('created_by', 'expenses_created_by_foreign');
+            $table->index('project_id', 'expenses_project_id_foreign');
+            $table->index('company_id', 'expenses_tenant_id_foreign');
+
+            $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
+            $table->foreign('account_id')->references('id')->on('accounts')->nullOnDelete();
+            $table->foreign('category_id')->references('id')->on('finance_categories')->nullOnDelete();
+            $table->foreign('created_by')->references('id')->on('users')->nullOnDelete();
+            $table->foreign('project_id')->references('id')->on('projects')->nullOnDelete();
         });
     }
 

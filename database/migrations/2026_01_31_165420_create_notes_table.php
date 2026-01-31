@@ -11,9 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('notes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('title', 255);
+            $table->longText('note')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->index('company_id', 'notes_tenant_id_foreign');
+            $table->index('user_id', 'notes_user_id_foreign');
+            $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
         });
     }
 

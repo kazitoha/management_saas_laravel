@@ -21,6 +21,12 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->enum('status', ['active', 'inactive', 'pending'])->default('pending');
+            $table->string('phone', 255)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->string('image', 255)->nullable();
+            $table->string('designation', 255)->nullable();
+            $table->string('joining_date', 255)->nullable();
+            $table->string('salary', 255)->nullable();
             $table->timestamps();
         });
 

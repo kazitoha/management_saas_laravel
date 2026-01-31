@@ -11,19 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_teams', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->string('name', 255);
+            $table->string('status', 255)->default('Ongoing');
+            $table->string('start_date', 255)->nullable();
+            $table->string('end_date', 255)->nullable();
+            $table->string('budget', 255)->nullable();
+            $table->longText('description')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
-            $table->unique(['project_id', 'user_id'], 'project_teams_project_id_user_id_unique');
-            $table->index('project_id', 'project_teams_project_id_foreign');
-            $table->index('company_id', 'project_teams_tenant_id_foreign');
-            $table->index('user_id', 'project_teams_user_id_foreign');
+            $table->index('company_id', 'projects_tenant_id_foreign');
+            $table->index('user_id', 'projects_user_id_foreign');
             $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
-            $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
             $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
         });
     }
@@ -33,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('project_teams');
+        Schema::dropIfExists('projects');
     }
 };

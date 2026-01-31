@@ -11,20 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quotation_items', function (Blueprint $table) {
+        Schema::create('finance_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('quotation_id');
-            $table->string('description', 255);
-            $table->string('quantity', 255);
-            $table->string('rate', 255);
-            $table->string('amount', 255);
+            $table->string('name', 255);
+            $table->enum('type', ['Income', 'Expense']);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
-            $table->index('quotation_id', 'quotation_items_quotation_id_foreign');
-            $table->index('company_id', 'quotation_items_tenant_id_foreign');
+            $table->unique(['name', 'type', 'company_id'], 'finance_categories_name_type_tenant_id_unique');
+            $table->index('company_id', 'finance_categories_tenant_id_foreign');
             $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
-            $table->foreign('quotation_id')->references('id')->on('quotations')->cascadeOnDelete();
         });
     }
 
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quotations_items');
+        Schema::dropIfExists('finance_categories');
     }
 };
