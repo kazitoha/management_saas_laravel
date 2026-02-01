@@ -8,12 +8,153 @@
             'icon_theme' => 'default', // optional (for icon box color)
         ],
         [
-            'label' => 'Profile',
-            'icon' => 'user',
-            'route' => 'profile',
-            'patterns' => ['profile'],
-            'icon_theme' => 'emerald',
+            'label' => 'Projects',
+            'icon' => 'folder',
+            'route' => 'projects.index',
+            'patterns' => ['projects.*'],
+            'icon_theme' => 'emerald', // optional (for icon box color)
         ],
+        // [
+        //     'label' => 'My Tasks',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Attendance',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Conveyance',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Leave',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        [
+            'label' => 'Clients',
+            'icon' => 'users',
+            'route' => 'clients.index',
+            'patterns' => ['clients.*'],
+            'icon_theme' => 'emerald', // optional (for icon box color)
+        ],
+        // [
+        //     'label' => 'Quotations',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Bills',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Routine',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Notes',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Reminders',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Files',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // admins Settings
+        // [
+        //     'label' => 'All Tasks',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'View Attendance',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Leave Requests',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Leave Types',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Users',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Accounts',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Conveyance',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Incomes',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
+        // [
+        //     'label' => 'Expenses',
+        //     'icon' => 'home',
+        //     'route' => 'dashboard',
+        //     'patterns' => ['dashboard'],
+        //     'icon_theme' => 'default', // optional (for icon box color)
+        // ],
     ];
 @endphp
 
@@ -114,6 +255,8 @@
                 => '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 9.4-8 10-4.5-.6-8-5-8-10V6l8-4z"/></svg>',
             'user'
                 => '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>',
+            'folder'
+                => '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
             default
                 => '<svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg>',
         };

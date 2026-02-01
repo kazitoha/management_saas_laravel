@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ config('app.name', 'Task Manager') }} — Create account</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -104,132 +105,135 @@
                         </div>
                     </div>
 
-	                    <div class="mt-8 md:mt-0">
-	                        <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">
-	                            Create your account
-	                        </h1>
-	                        <p class="mt-2 text-sm text-slate-500">
-	                            Create an account to access the dashboard.
-	                        </p>
-	                    </div>
+                    <div class="mt-8 md:mt-0">
+                        <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">
+                            Create your account
+                        </h1>
+                        <p class="mt-2 text-sm text-slate-500">
+                            Create an account to access the dashboard.
+                        </p>
+                    </div>
 
-	                    <form class="mt-7 space-y-4" action="{{ route('register.store') }}" method="post" novalidate>
-	                        @csrf
+                    <form class="mt-7 space-y-4" action="{{ route('register.store') }}" method="post" novalidate>
+                        @csrf
 
-	                        @if (session('status'))
-	                            <div class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-	                                {{ session('status') }}
-	                            </div>
-	                        @endif
+                        @if (session('status'))
+                            <div
+                                class="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-	                        @if ($errors->any())
-	                            <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-	                                {{ $errors->first() }}
-	                            </div>
-	                        @endif
+                        @if ($errors->any())
+                            <div class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
 
-	                        <!-- Name -->
-	                        <div>
-	                            <label class="text-sm font-semibold text-slate-700">Name</label>
-	                            <div class="relative mt-2">
-	                                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-	                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
-	                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-	                                        <circle cx="12" cy="7" r="4" />
-	                                    </svg>
-	                                </span>
-	                                <input type="text" name="name" placeholder="Your name"
-	                                    value="{{ old('name') }}"
-	                                    autocomplete="name"
-	                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('name') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
-	                                    required />
-	                            </div>
-	                            @error('name')
-	                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
-	                            @enderror
-	                        </div>
+                        <!-- Name -->
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">Name</label>
+                            <div class="relative mt-2">
+                                <span
+                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                </span>
+                                <input type="text" name="name" placeholder="Your name" value="{{ old('name') }}"
+                                    autocomplete="name"
+                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('name') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
+                                    required />
+                            </div>
+                            @error('name')
+                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-	                        <!-- Email -->
-	                        <div>
-	                            <label class="text-sm font-semibold text-slate-700">Email</label>
-	                            <div class="relative mt-2">
-	                                <span
-	                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-	                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor"
-	                                        stroke-width="2">
-	                                        <path d="M4 4h16v16H4z" opacity="0.2" />
-	                                        <path d="M4 6l8 6 8-6" />
-	                                        <path d="M4 18h16" />
-	                                    </svg>
-	                                </span>
-	                                <input type="email" name="email" placeholder="you@example.com"
-	                                    value="{{ old('email') }}"
-	                                    autocomplete="email"
-	                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('email') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
-	                                    required />
-	                            </div>
-	                            @error('email')
-	                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
-	                            @enderror
-	                        </div>
+                        <!-- Email -->
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">Email</label>
+                            <div class="relative mt-2">
+                                <span
+                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M4 4h16v16H4z" opacity="0.2" />
+                                        <path d="M4 6l8 6 8-6" />
+                                        <path d="M4 18h16" />
+                                    </svg>
+                                </span>
+                                <input type="email" name="email" placeholder="you@example.com"
+                                    value="{{ old('email') }}" autocomplete="email"
+                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('email') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
+                                    required />
+                            </div>
+                            @error('email')
+                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-	                        <!-- Password -->
-	                        <div>
-	                            <label class="text-sm font-semibold text-slate-700">Password</label>
-	                            <div class="relative mt-2">
-	                                <span
-	                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-	                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor"
-	                                        stroke-width="2">
-	                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-	                                        <rect x="5" y="11" width="14" height="10" rx="2" />
-	                                    </svg>
-	                                </span>
+                        <!-- Password -->
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">Password</label>
+                            <div class="relative mt-2">
+                                <span
+                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                        <rect x="5" y="11" width="14" height="10" rx="2" />
+                                    </svg>
+                                </span>
 
-	                                <input id="password" type="password" name="password" placeholder="••••••••"
-	                                    autocomplete="new-password"
-	                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-12 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('password') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
-	                                    required />
+                                <input id="password" type="password" name="password" placeholder="••••••••"
+                                    autocomplete="new-password"
+                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-12 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('password') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
+                                    required />
 
-	                                <button type="button" data-toggle-password="password"
-	                                    class="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white">
-	                                    Show
-	                                </button>
-	                            </div>
-	                            @error('password')
-	                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
-	                            @enderror
-	                        </div>
+                                <button type="button" data-toggle-password="password"
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white">
+                                    Show
+                                </button>
+                            </div>
+                            @error('password')
+                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-	                        <!-- Confirm Password -->
-	                        <div>
-	                            <label class="text-sm font-semibold text-slate-700">Confirm password</label>
-	                            <div class="relative mt-2">
-	                                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-	                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
-	                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-	                                        <rect x="5" y="11" width="14" height="10" rx="2" />
-	                                    </svg>
-	                                </span>
-	                                <input id="password_confirmation" type="password" name="password_confirmation" placeholder="••••••••"
-	                                    autocomplete="new-password"
-	                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-12 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('password_confirmation') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
-	                                    required />
-	                                <button type="button" data-toggle-password="password_confirmation"
-	                                    class="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white">
-	                                    Show
-	                                </button>
-	                            </div>
-	                            @error('password_confirmation')
-	                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
-	                            @enderror
-	                        </div>
+                        <!-- Confirm Password -->
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">Confirm password</label>
+                            <div class="relative mt-2">
+                                <span
+                                    class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                        <rect x="5" y="11" width="14" height="10" rx="2" />
+                                    </svg>
+                                </span>
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    placeholder="••••••••" autocomplete="new-password"
+                                    class="w-full rounded-2xl border bg-slate-50 py-3 pl-10 pr-12 text-sm outline-none ring-blue-200 focus:ring-4 {{ $errors->has('password_confirmation') ? 'border-red-300 focus:border-red-400 focus:ring-red-200' : 'border-slate-200 focus:border-blue-300' }}"
+                                    required />
+                                <button type="button" data-toggle-password="password_confirmation"
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-white">
+                                    Show
+                                </button>
+                            </div>
+                            @error('password_confirmation')
+                                <p class="mt-2 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-	                        <!-- Submit -->
-	                        <button type="submit"
-	                            class="w-full rounded-2xl bg-slate-900 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
-	                            Create account
-	                        </button>
+                        <!-- Submit -->
+                        <button type="submit"
+                            class="w-full rounded-2xl bg-slate-900 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
+                            Create account
+                        </button>
 
                         <!-- Divider -->
                         <div class="relative py-2">
@@ -262,29 +266,30 @@
                             </button>
                         </div>
 
-	                        <p class="pt-2 text-center text-sm text-slate-600">
-	                            Already have an account?
-	                            <a href="{{ route('login') }}" class="font-semibold text-slate-900 hover:underline">Sign in</a>
-	                        </p>
-	                    </form>
-	                </div>
-	            </div>
-	        </div>
+                        <p class="pt-2 text-center text-sm text-slate-600">
+                            Already have an account?
+                            <a href="{{ route('login') }}" class="font-semibold text-slate-900 hover:underline">Sign
+                                in</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
-	    <script>
-	        document.querySelectorAll("[data-toggle-password]").forEach((btn) => {
-	            const targetId = btn.getAttribute("data-toggle-password");
-	            const input = document.getElementById(targetId);
-	            if (!input) return;
+    <script>
+        document.querySelectorAll("[data-toggle-password]").forEach((btn) => {
+            const targetId = btn.getAttribute("data-toggle-password");
+            const input = document.getElementById(targetId);
+            if (!input) return;
 
-	            btn.addEventListener("click", () => {
-	                const isPassword = input.type === "password";
-	                input.type = isPassword ? "text" : "password";
-	                btn.textContent = isPassword ? "Hide" : "Show";
-	            });
-	        });
-	    </script>
+            btn.addEventListener("click", () => {
+                const isPassword = input.type === "password";
+                input.type = isPassword ? "text" : "password";
+                btn.textContent = isPassword ? "Hide" : "Show";
+            });
+        });
+    </script>
 </body>
 
 </html>

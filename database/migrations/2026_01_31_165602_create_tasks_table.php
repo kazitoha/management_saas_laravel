@@ -25,7 +25,11 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->index('company_id', 'tasks_tenant_id_foreign');
+
             $table->foreign('company_id')->references('id')->on('companies')->nullOnDelete();
+            $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
+            $table->foreign('assigned_to')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

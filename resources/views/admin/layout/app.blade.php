@@ -6,16 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         html,
         body {
             font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial,
                 "Noto Sans", "Liberation Sans", sans-serif;
+        }
+
+        [x-cloak] {
+            display: none !important;
         }
 
         /* Smooth transitions */
@@ -123,6 +128,48 @@
 
 
 
+                    {{-- Errors --}}
+                    @if ($errors->any())
+                        <div class="rounded-2xl border border-rose-200 bg-white shadow-sm overflow-hidden">
+                            <div class="flex items-start gap-3 bg-rose-50 px-5 py-4">
+                                <div
+                                    class="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-rose-600 ring-1 ring-rose-200">
+                                    <i class="bi bi-exclamation-triangle text-lg"></i>
+                                </div>
+
+                                <div class="flex-1">
+                                    <div class="text-sm font-semibold text-rose-900">Please fix the following</div>
+                                    <div class="mt-1 text-sm text-rose-800/80">
+                                        Some fields need attention before you can continue.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="px-5 py-4">
+                                <ul class="list-disc space-y-1 pl-5 text-sm text-slate-700">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Success --}}
+                    @if (session('success'))
+                        <div class="rounded-2xl border border-emerald-200 bg-white shadow-sm overflow-hidden">
+                            <div class="flex items-start gap-3 bg-emerald-50 px-5 py-4">
+
+
+                                <div class="flex-1">
+                                    <div class="text-sm font-semibold text-emerald-900">Success</div>
+                                    <div class="mt-1 text-sm text-emerald-800/80">
+                                        {{ session('success') }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
 
 

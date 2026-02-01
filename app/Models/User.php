@@ -63,4 +63,83 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Companies::class, 'companies_id');
     }
+
+
+
+    /**
+     * Get the projects for the user.
+     */
+    public function projects()
+    {
+        return $this->hasMany(Projects::class);
+    }
+
+    /**
+     * Get the tasks for the user.
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Tasks::class);
+    }
+
+    /**
+     * Get the routines for the user.
+     */
+    public function routines()
+    {
+        return $this->hasMany(Routines::class);
+    }
+
+    /**
+     * Get the notes for the user.
+     */
+    public function notes()
+    {
+        return $this->hasMany(Notes::class);
+    }
+
+    /**
+     * Get the calendar events for the user.
+     */
+    public function files()
+    {
+        return $this->hasMany(Files::class);
+    }
+
+    public function reminders()
+    {
+        return $this->hasMany(Reminders::class);
+    }
+
+    public function leaveRequests()
+    {
+        return $this->hasMany(LeaveRequests::class);
+    }
+
+    public function leaveBalances()
+    {
+        return $this->hasMany(LeaveBalances::class);
+    }
+
+    public function projectMembers()
+    {
+        return $this->belongsToMany(Projects::class, 'project_teams', 'user_id', 'project_id');
+    }
+
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role && $this->role->name === $role;
+    }
+
+    public function hasAnyRole(array $roles): bool
+    {
+        return $this->role && in_array($this->role->name, $roles, true);
+    }
+
+
+    public function conveyanceBills()
+    {
+        return $this->hasMany(ConvenyanceBills::class);
+    }
 }
