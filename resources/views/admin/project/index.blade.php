@@ -137,20 +137,18 @@
                                 <div class="mt-auto flex items-center gap-2 border-t border-slate-100 pt-2">
                                     <a href="{{ route('projects.tasks.index', $project->id) }}"
                                         class="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-                                        title="Open board">
-                                        Board
-                                    </a>
+                                        title="Open board"> <i class="bi bi-kanban p-1"></i> </a>
 
                                     <a href="{{ route('projects.show', $project->id) }}"
                                         class="inline-flex items-center justify-center rounded-md border border-sky-500 bg-white px-2.5 py-1.5 text-xs font-medium text-sky-600 hover:bg-sky-50"
                                         title="Details">
-                                        Details
+                                        <i class="bi bi-eye p-1"></i>
                                     </a>
 
                                     <a href="{{ route('projects.edit', $project->id) }}"
                                         class="inline-flex items-center justify-center rounded-md border border-amber-400 bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-700 hover:bg-amber-100"
                                         title="Edit">
-                                        Edit
+                                        <i class="bi bi-pencil-square p-1"></i>
                                     </a>
 
                                     <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
@@ -161,7 +159,7 @@
                                         <button type="submit"
                                             class="inline-flex items-center justify-center rounded-md border border-rose-500 bg-rose-50 px-2.5 py-1.5 text-xs font-medium text-rose-700 hover:bg-rose-100"
                                             title="Delete">
-                                            Delete
+                                            <i class="bi bi-trash p-1"></i>
                                         </button>
                                     </form>
                                 </div>

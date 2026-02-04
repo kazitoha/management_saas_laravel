@@ -45,10 +45,10 @@ Route::middleware(['auth', 'ensure.permission'])->group(function () {
     Route::resource('clients', ClientController::class);
     Route::resource('projects', ProjectController::class);
     Route::post('projects/add-member', [ProjectController::class, 'addMember'])->name('projects.addMember');
-    Route::delete('projects/remove-member', [ProjectController::class, 'removeMember'])->name('projects.removeMember');
 
     Route::get('projects/{project}/tasks', [TaskController::class, 'index'])->name('projects.tasks.index');
     Route::post('projects/{project}/tasks', [TaskController::class, 'store'])->name('projects.tasks.store');
+
     Route::get('tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
     Route::put('tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
@@ -64,14 +64,8 @@ Route::middleware(['auth', 'ensure.permission'])->group(function () {
 
     Route::resource('projects', ProjectController::class);
     Route::post('project/team', [ProjectController::class, 'addMember'])->name('projects.addMember');
-    Route::delete('project/team', [ProjectController::class, 'removeMember'])->name('projects.removeMember');
     Route::get('projects/{project}/tasks', [TaskController::class, 'index'])->name('projects.tasks.index');
     Route::post('projects/{project}/tasks', [TaskController::class, 'store'])->name('projects.tasks.store');
-
-
-
-
-
 
 
 

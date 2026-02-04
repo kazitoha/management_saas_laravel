@@ -22,8 +22,8 @@ class ProjectController extends Controller
             $projects = Projects::paginate(30)->load('tasks');
 
             return view('admin.project.index', compact('projects'));
-        } catch (\Exception $e) {
-            return back()->with('error', 'Could not load projects.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
@@ -32,8 +32,8 @@ class ProjectController extends Controller
         try {
             $clients = Clients::orderBy('name')->get(['id', 'name']);
             return view('admin.project.create', compact('clients'));
-        } catch (\Exception $e) {
-            return back()->with('error', 'Could not open create form.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
@@ -50,10 +50,21 @@ class ProjectController extends Controller
                 'client_id' => 'required|exists:clients,id',
             ]);
 
-            Auth::user()->projects()->create($request->all());
+            $assignBy = Auth::user();
+            $project = Projects::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'status' => $request->status,
+                'budget' => $request->budget,
+                'client_id' => $request->client_id,
+                'user_id' => $assignBy->id,
+            ]);
+
             return redirect()->route('projects.index')->with('success', 'Project created successfully.');
-        } catch (\Exception $e) {
-            return back()->withInput()->with('error', 'Could not create project.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
@@ -63,8 +74,8 @@ class ProjectController extends Controller
             $teamMembers = $project->users()->get();
             $users = User::all();
             return view('admin.project.show', compact('project', 'teamMembers', 'users'));
-        } catch (\Exception $e) {
-            return back()->with('error', 'Could not load project.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
@@ -74,8 +85,8 @@ class ProjectController extends Controller
 
             $clients = Clients::orderBy('name')->get(['id', 'name']);
             return view('admin.project.edit', compact('project', 'clients'));
-        } catch (\Exception $e) {
-            return back()->with('error', 'Could not open edit form.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
@@ -92,25 +103,24 @@ class ProjectController extends Controller
                 'client_id' => 'required|exists:clients,id',
             ]);
 
+            // dd($request->all());
             $project->update($request->all());
 
             return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
-        } catch (\Exception $e) {
-            return back()->withInput()->with('error', 'Could not update project.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
-    public function destroy(Project $project)
+    public function destroy(Projects $project)
     {
         try {
-            $project->teams()->delete();
-            $project->delete();
-
+            if (! $project->teams()->exists()) {
+                $project->delete();
+            }
             return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
-        } catch (\Exception $e) {
-            return back()->withErrors([
-                'delete' => 'Cannot work.',
-            ]);
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
@@ -121,36 +131,27 @@ class ProjectController extends Controller
                 'project_id' => 'required|exists:projects,id',
                 'user_id' => 'required|exists:users,id',
             ]);
-
-            $project = Project::find($request->project_id);
-            // Attach user to project via pivot table without creating duplicates
+            $project = Projects::findOrFail($request->project_id);
             $project->users()->syncWithoutDetaching([$request->user_id]);
             return redirect()->back()->with('success', 'User added successfully.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Could not add team member.');
+        } catch (\Throwable $e) {
+            return log_error($e);
         }
     }
 
     public function removeMember(Request $request)
     {
-        try {
-            $request->validate([
-                'project_id' => 'required|exists:projects,id',
-                'user_id' => 'required|exists:users,id',
-            ]);
-
-            $project = Project::findOrFail($request->project_id);
-            $actor = Auth::user();
-            $isOwner = (int)$project->user_id === (int)$actor->id;
-            $isAdmin = method_exists($actor, 'hasAnyRole') ? $actor->hasAnyRole(['admin', 'manager']) : false;
-            if (!($isOwner || $isAdmin)) {
-                abort(403);
-            }
-
-            $project->users()->detach($request->user_id);
-            return redirect()->back()->with('success', 'Team member removed successfully.');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Could not remove team member.');
-        }
+        // try {
+        dd(123);
+        $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        $project = Projects::findOrFail($request->project_id);
+        $project->users()->detach($request->user_id);
+        return redirect()->back()->with('success', 'Team member removed successfully.');
+        // } catch (\Throwable $e) {
+        //     return log_error($e);
+        // }
     }
 }

@@ -53,10 +53,11 @@ class Projects extends Model
     {
         return $this->hasMany(Tasks::class, 'project_id');
     }
-    public function teams()   // or projectTeams()
+    public function teams()
     {
-        return $this->hasMany(ProjectTeams::class);
+        return $this->belongsToMany(User::class, 'project_teams', 'project_id', 'user_id');
     }
+
 
     public function files()
     {
