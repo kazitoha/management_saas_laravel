@@ -50,6 +50,7 @@ class TaskController extends Controller
                 'due_date' => $request->input('due_date'),
                 'priority' => $request->input('priority'),
                 'status' => $request->input('status', 'to_do'),
+                'company_id' => session('company_id'),
             ]);
 
             return redirect()->route('projects.tasks.index', $project)->with('success', 'Task created successfully.');
@@ -105,6 +106,8 @@ class TaskController extends Controller
                 'priority' => $request->input('priority'),
                 'status' => $request->input('status'),
                 'assigned_to' => $request->input('assigned_to'),
+                'company_id' => session('company_id'),
+
             ]);
 
             return redirect()->route('projects.tasks.index', $task->project_id)->with('success', 'Task updated successfully.');
@@ -175,13 +178,10 @@ class TaskController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
             ]);
-
-            $user = Auth::user();
-            $project = $task->project;
-
             $task->checklistItems()->create([
                 'title' => $request->input('title'),
                 'is_completed' => 0,
+                'company_id' => session('company_id'),
             ]);
 
             return back()->with('success', 'Checklist item added.');

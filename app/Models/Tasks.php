@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Projects;
 use App\Models\TaskCheckListItem;
 use App\Models\User;
+use App\Traits\CompanyScoped;
+use App\Traits\LogsActivity;
 
 class Tasks extends Model
 {
+    use CompanyScoped, LogsActivity;
+
     protected $table = 'tasks';
 
     protected $fillable = [
@@ -20,6 +24,7 @@ class Tasks extends Model
         'due_date',
         'priority',
         'status',
+        'company_id',
     ];
 
     protected $casts = [
@@ -28,7 +33,7 @@ class Tasks extends Model
 
     public function project()
     {
-        return $this->belongsTo(Projects::class, 'projects_id');
+        return $this->belongsTo(Projects::class, 'project_id');
     }
 
     public function user()

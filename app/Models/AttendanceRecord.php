@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\CompanyScoped;
 use App\Traits\LogsActivity;
 
-class BillItems extends Model
+
+class AttendanceRecord extends Model
 {
     use CompanyScoped, LogsActivity;
 

@@ -6,9 +6,11 @@ use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
 class Companies extends Model
 {
     use  LogsActivity;
+
     protected $table = 'companies';
 
 

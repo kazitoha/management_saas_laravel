@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Traits\LogsActivity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CompanyScoped;
 
 class Projects extends Model
 {
-    use LogsActivity;
+    use CompanyScoped, LogsActivity;
+
 
     protected $table = 'projects';
 
@@ -34,9 +36,10 @@ class Projects extends Model
         'end_date' => 'date',
     ];
 
-    public function user()
+
+    public function teamMembers()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'project_teams', 'project_id', 'user_id');
     }
 
     public function company()

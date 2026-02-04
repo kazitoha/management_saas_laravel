@@ -19,6 +19,7 @@ class ProjectController extends Controller
     public function index()
     {
         try {
+
             $projects = Projects::paginate(30)->load('tasks');
 
             return view('admin.project.index', compact('projects'));
@@ -60,6 +61,7 @@ class ProjectController extends Controller
                 'budget' => $request->budget,
                 'client_id' => $request->client_id,
                 'user_id' => $assignBy->id,
+                'company_id' => session('company_id'),
             ]);
 
             return redirect()->route('projects.index')->with('success', 'Project created successfully.');
@@ -104,8 +106,7 @@ class ProjectController extends Controller
             ]);
 
             // dd($request->all());
-            $project->update($request->all());
-
+            $project->update($request->all() + ['company_id' => session('company_id')]);
             return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
         } catch (\Throwable $e) {
             return log_error($e);
@@ -132,7 +133,10 @@ class ProjectController extends Controller
                 'user_id' => 'required|exists:users,id',
             ]);
             $project = Projects::findOrFail($request->project_id);
-            $project->users()->syncWithoutDetaching([$request->user_id]);
+            $project->users()->syncWithoutDetaching([
+                $request->user_id => ['company_id' => session('company_id')]
+            ]);
+
             return redirect()->back()->with('success', 'User added successfully.');
         } catch (\Throwable $e) {
             return log_error($e);
@@ -141,17 +145,18 @@ class ProjectController extends Controller
 
     public function removeMember(Request $request)
     {
-        // try {
-        dd(123);
-        $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'user_id' => 'required|exists:users,id',
-        ]);
-        $project = Projects::findOrFail($request->project_id);
-        $project->users()->detach($request->user_id);
-        return redirect()->back()->with('success', 'Team member removed successfully.');
-        // } catch (\Throwable $e) {
-        //     return log_error($e);
-        // }
+        try {
+
+            $request->validate([
+                'project_id' => 'required|exists:projects,id',
+                'user_id' => 'required|exists:users,id',
+            ]);
+
+            $project = Projects::findOrFail($request->project_id);
+            $project->users()->detach($request->user_id);
+            return redirect()->back()->with('success', 'Team member removed successfully.');
+        } catch (\Throwable $e) {
+            return log_error($e);
+        }
     }
 }

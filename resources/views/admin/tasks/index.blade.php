@@ -47,10 +47,12 @@
                 <div class="text-xs uppercase text-slate-400">Progress</div>
                 <div class="text-2xl font-semibold text-slate-800">{{ $progress }}%</div>
             </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                <div class="text-xs uppercase text-slate-400">Team Members</div>
-                <div class="text-2xl font-semibold text-slate-800">{{ $users->count() }}</div>
-            </div>
+            <a href="{{ route('projects.show', $project->id) }}" class="no-underline hover:no-underline">
+                <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div class="text-xs uppercase text-slate-400">Team Members</div>
+                    <div class="text-2xl font-semibold text-slate-800">{{ $project->teamMembers->count() }}</div>
+                </div>
+            </a>
         </div>
 
 

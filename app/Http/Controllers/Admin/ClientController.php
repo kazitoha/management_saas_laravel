@@ -48,7 +48,7 @@ class ClientController extends Controller
             'address' => 'nullable|string|max:255',
             'note' => 'nullable|string',
         ]);
-        Clients::create($validated);
+        Clients::create($validated + ['company_id' => session('company_id')]);
         return redirect()->route('clients.index')->with('success', 'Client created.');
     }
 
@@ -86,7 +86,7 @@ class ClientController extends Controller
             'address' => 'nullable|string|max:255',
             'note' => 'nullable|string',
         ]);
-        $client->update($validated);
+        $client->update($validated + ['company_id' => session('company_id')]);
 
         return redirect()->route('clients.index')->with('success', 'Client updated.');
     }

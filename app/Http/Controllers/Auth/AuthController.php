@@ -47,8 +47,12 @@ class AuthController extends Controller
         // check auth based on mail and role guard
 
         if (Auth::guard('web')->attempt($credentials, $remember)) {
+
             $request->session()->regenerate();
-            RateLimiter::clear($key); // reset failed attempts on success
+            RateLimiter::clear($key);
+
+            $user = Auth::guard('web')->user();
+            $request->session()->put('company_id', $user->companies_id);
 
             return redirect()->intended(route('dashboard'));
         }
@@ -58,6 +62,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
             RateLimiter::clear($key); // reset failed attempts on success
+
 
             return redirect()->intended(route('superadmin.dashboard'));
         }
@@ -110,7 +115,7 @@ class AuthController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-
+        session()->forget('company_id');
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

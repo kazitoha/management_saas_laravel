@@ -31,12 +31,7 @@
             @include('partials.status-badge', ['status' => $project->status])
         </div>
 
-        {{-- Flash success --}}
-        @if (session('success'))
-            <div class="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                {{ session('success') }}
-            </div>
-        @endif
+
 
         {{-- Main Grid --}}
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-5">
@@ -139,7 +134,6 @@
                         <div class="mb-3 flex items-center justify-between">
                             <h5 class="m-0 text-sm font-semibold text-slate-800">Team Members</h5>
 
-                            {{-- Tailwind Modal --}}
 
                             <!-- Button -->
                             <button type="button"
@@ -237,7 +231,7 @@
 
                                         {{-- Remove Button --}}
 
-                                        <form method="POST" action="{{ route('projects.removeMember') }}"
+                                        <form method="POST" action="{{ route('projects.removeMember', $user->id) }}"
                                             onsubmit="return confirm('Remove this member from the project?');">
                                             @csrf
                                             @method('DELETE')
