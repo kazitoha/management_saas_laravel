@@ -113,6 +113,7 @@
     </style>
 </head>
 
+
 <body class="bg-slate-50 text-slate-900">
 
     @include('admin.layout.mobile-menu')

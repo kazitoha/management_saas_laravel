@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Companies;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,8 +24,9 @@ return new class extends Migration
             $table->decimal('check_out_lat', 10, 7)->nullable();
             $table->decimal('check_out_lng', 10, 7)->nullable();
             $table->string('check_out_address')->nullable();
-
+            $table->string('duration_minutes')->nullable();
             $table->string('notes')->nullable();
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

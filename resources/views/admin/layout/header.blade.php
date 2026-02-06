@@ -44,10 +44,7 @@
 
          <!-- Right: actions -->
          <div class="flex items-center gap-2">
-             <button
-                 class="hidden rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 md:inline-flex transition-all duration-200 hover:border-blue-300 active:scale-95">
-                 Add
-             </button>
+
 
              <button
                  class="hidden md:grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 active:scale-95"
@@ -78,9 +75,9 @@
                  <div id="profileMenu"
                      class="absolute right-0 mt-2 hidden w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg transition-all duration-200 opacity-0 scale-95"
                      role="menu">
-                    <a href="{{ route('profile') }}"
-                        class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors duration-150"
-                        role="menuitem">Profile</a>
+                     <a href="{{ route('profile') }}"
+                         class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors duration-150"
+                         role="menuitem">Profile</a>
                      <a href="#"
                          class="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors duration-150"
                          role="menuitem">Settings</a>

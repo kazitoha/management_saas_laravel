@@ -69,18 +69,19 @@
                     My Tasks
                 </a>
             @endif
-            {{-- <a href="#"
-                class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50">
-                <span class="grid h-9 w-9 place-items-center rounded-xl bg-lime-50 text-lime-700">
-                    <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M8 7V3m8 4V3M4 11h16" />
-                        <rect x="4" y="7" width="16" height="14" rx="2" />
-                    </svg>
-                </span>
-                Attendance
-            </a>
-
-            <a href="#"
+            @if (permissionExists('attendance') || Auth::user()->roles->contains('name', 'admin'))
+                <a href="{{ route('attendance') }}"
+                    class="{{ request()->routeIs('attendance') ? $active : $inactive }}">
+                    <span class="grid h-9 w-9 place-items-center rounded-xl bg-lime-50 text-lime-700">
+                        <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 7V3m8 4V3M4 11h16" />
+                            <rect x="4" y="7" width="16" height="14" rx="2" />
+                        </svg>
+                    </span>
+                    Attendance
+                </a>
+            @endif
+            {{--   <a href="#"
                 class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50">
                 <span class="grid h-9 w-9 place-items-center rounded-xl bg-indigo-50 text-indigo-600">
                     <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2">

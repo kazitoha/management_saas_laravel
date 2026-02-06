@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\MyTaskController;
@@ -71,10 +72,15 @@ Route::middleware(['auth', 'ensure.permission'])->group(function () {
     Route::patch('tasks/checklist/{item}', [TaskController::class, 'toggleChecklistItem'])->name('tasks.checklist.toggle');
     Route::delete('tasks/checklist/{item}', [TaskController::class, 'deleteChecklistItem'])->name('tasks.checklist.destroy');
 
-
-
     // my tasks route
     Route::get('/my-tasks', [MyTaskController::class, 'index'])->name('my-tasks');
+
+    // attendance routes
+    Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance');
+    Route::post('attendance/check-in', [AttendanceController::class, 'checkIn'])->name('attendance.checkin');
+    Route::post('attendance/check-out', [AttendanceController::class, 'checkOut'])->name('attendance.checkout');
+
+
 
     Route::get('/profile', function () {
         return view('admin.profile');
